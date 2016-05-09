@@ -8,11 +8,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.siot.iamportsdk.KakaoWebViewClient;
-import com.siot.iamportsdk.PaymentScheme;
 
 public class KakaoActivity extends Activity {
 
 	private WebView mainWebView;
+	private final String APP_SCHEME = "iamportkakao://";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,7 @@ public class KakaoActivity extends Activity {
         WebSettings settings = mainWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         
-//        mainWebView.loadUrl("http://www.iamport.kr/demo");
-    	mainWebView.loadUrl("http://192.168.1.8");
+        mainWebView.loadUrl("http://www.iamport.kr/demo");
     }
     
     
@@ -46,10 +45,9 @@ public class KakaoActivity extends Activity {
     		if ( intentData != null ) {
             	//카카오페이 인증 후 복귀했을 때 결제 후속조치
             	String url = intentData.toString();
-            	String scheme = PaymentScheme.KAKAO + "://";
             	
-            	if ( url.startsWith(scheme) ) {
-            		String path = url.substring(scheme.length());
+            	if ( url.startsWith(APP_SCHEME) ) {
+            		String path = url.substring(APP_SCHEME.length());
             		if ( "process".equalsIgnoreCase(path) ) {
             			mainWebView.loadUrl("javascript:IMP.communicate({result:'process'})");
             		} else {

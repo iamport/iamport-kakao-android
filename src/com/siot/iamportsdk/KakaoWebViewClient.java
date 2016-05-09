@@ -47,22 +47,4 @@ public class KakaoWebViewClient extends WebViewClient {
 		return false;
 	}
 	
-	/**
-	 * @param scheme
-	 * @return 해당 scheme에 대해 처리를 직접 하는지 여부
-	 * 
-	 * 1. 결제를 위한 3rd-party 앱이 아직 설치되어있지 않을 때, 호출되는 url에 package정보가 없어 market으로 연결이 안되는 경우 사전 처리를 해주어야 합니다.(ActivityNotFoundException에서 처리가 안되는 경우)
-	 * 2. 3rd-party에 따라 구매자를 위한 custom message를 제공한다거나 별도의 처리를 해야 할 필요가 있을 때 사용합니다. 
-	 * 
-	 */
-	protected boolean handle3rdPartyPaymentScheme(String scheme) {
-		//PG사에서 호출하는 url에 package정보가 없어 ActivityNotFoundException이 난 후 market 실행이 안되는 경우
-		if ( PaymentScheme.ISP.equalsIgnoreCase(scheme) ) {
-			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + PaymentScheme.PACKAGE_ISP)));
-			return true;
-		}
-		
-		return false;
-	}
-	
 }
